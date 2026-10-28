@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "id": "seed-guide-demo",
+  "revision": 1,
+  "title": "The seed library field guide",
+  "summary": "A fully synthetic session: turn a small collection of planting notes into an accessible, printable guide. The structure is proven; the illustrations and print checks need another pass.",
+  "as_of": "2026-01-15T14:30:00Z",
+  "goals": [
+    {"id": "structure", "title": "Make the guide easy to navigate", "status": "passed", "evidence_ids": ["outline-review"]},
+    {"id": "illustrations", "title": "Draw three simple planting diagrams", "status": "running", "evidence_ids": ["drawing-check"]},
+    {"id": "print", "title": "Meet the print contrast target", "status": "failed", "evidence_ids": ["print-check"]},
+    {"id": "reading", "title": "Check the reading order on a small screen", "status": "planned", "evidence_ids": []},
+    {"id": "translation", "title": "Translate the guide after the first edition", "status": "skipped", "evidence_ids": ["scope-decision"]},
+    {"id": "paper", "title": "Confirm the recycled-paper print result", "status": "unknown", "evidence_ids": []}
+  ],
+  "evidence": [
+    {"id": "outline-review", "label": "Outline has one clear path from seed to harvest", "status": "passed", "source": "Synthetic outline walkthrough, fixture A", "as_of": "2026-01-15T13:40:00Z"},
+    {"id": "drawing-check", "label": "Two diagrams drafted; the third is still in progress", "status": "running", "source": "Synthetic drawing inventory, fixture B", "as_of": "2026-01-15T14:20:00Z"},
+    {"id": "print-check", "label": "Small caption contrast did not meet the chosen target", "status": "failed", "source": "Synthetic print check, fixture C; no actual measurement", "as_of": "2026-01-15T14:10:00Z"},
+    {"id": "scope-decision", "label": "Translation intentionally deferred to the next edition", "status": "skipped", "source": "Synthetic scope decision, fixture D", "as_of": "2026-01-15T13:00:00Z", "url": "https://example.com/synthetic-scope"}
+  ],
+  "blockers": [
+    {"id": "caption-contrast", "title": "The smallest captions need a darker ink", "status": "failed", "detail": "The synthetic print check failed. Adjust the caption treatment, then run the same check again before calling the print goal passed."},
+    {"id": "paper-sample", "title": "No paper sample is available yet", "status": "unknown", "detail": "There is no observed result for the paper test. Leave the goal unknown until a sample is checked."}
+  ],
+  "suggestions": [
+    {"kind": "prompt", "title": "Resolve the smallest unproven step", "detail": "Suggested prompt: Darken the small captions, repeat the print check, and attach the observed result. Keep the other goals unchanged."},
+    {"kind": "skill", "title": "Consider an accessibility review", "detail": "If an accessibility skill is available, use it for the reading-order goal after the diagrams settle. This is a suggestion, not an invocation."},
+    {"kind": "context", "title": "Carry the decision, not the whole conversation", "detail": "Retain the edition scope, caption requirement, evidence identifiers, and unresolved paper test in the next handoff. Omit draft chatter and unrelated history."},
+    {"kind": "loop", "title": "One adjustment → one observed check", "detail": "Suggested loop: change captions → run the print check → record evidence → update this page. Stop after one attempt if the check cannot run; report the blocker instead of inferring success."}
+  ],
+  "notes": [
+    "Every name, event, decision, and result in this demo is synthetic.",
+    "Passed / total counts describe goals with supporting evidence. They are not a prediction of remaining effort.",
+    "This is a snapshot at the displayed time. An earlier result does not prove that later changes pass."
+  ]
+}

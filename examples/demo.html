@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="visual-session-id" content="seed-guide-demo">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>The seed library field guide · visual-session</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f5f4ed; --surface: #fffef9; --ink: #202c2a;
+      --muted: #5c6964; --line: #d5d9cf; --accent: #1e6557;
+      --passed: #216450; --running: #245f86; --failed: #a33434;
+      --planned: #5f6470; --skipped: #735d39; --unknown: #665376;
+      --space: 1.5rem;
+      font: 16px/1.6 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; color: var(--ink); background: var(--paper); }
+    a { color: var(--accent); text-underline-offset: .2em; overflow-wrap: anywhere; }
+    a:hover { text-decoration-thickness: 2px; }
+    a:focus-visible, summary:focus-visible { outline: 3px solid #b05d14; outline-offset: 4px; }
+    h1, h2, h3, p { margin: 0; }
+    h1 { font: 500 clamp(2.4rem, 5vw, 4.25rem)/1.08 Georgia, "Times New Roman", serif; letter-spacing: -.035em; max-width: 20ch; }
+    h2 { font-size: 1.15rem; letter-spacing: -.025em; line-height: 1.3; }
+    h3 { font-size: 1rem; line-height: 1.45; }
+    p, li, h1, h2, h3, span, time, code { overflow-wrap: anywhere; }
+    .masthead, .dashboard, .user-notes, .footer { max-width: 1380px; margin-inline: auto; padding-inline: clamp(1rem, 4vw, 4rem); }
+    .masthead { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: 1.5rem; border-bottom: 1px solid var(--line); }
+    .brand { font-weight: 750; letter-spacing: -.04em; font-size: 1.15rem; }
+    .brand-mark { display: inline-flex; align-items: flex-end; gap: 3px; margin-right: .6rem; height: 16px; }
+    .brand-mark i { display: block; width: 4px; background: var(--accent); height: 7px; }
+    .brand-mark i:nth-child(2) { height: 16px; } .brand-mark i:nth-child(3) { height: 11px; }
+    .edition { color: var(--muted); font: 700 .68rem/1.4 ui-monospace, monospace; letter-spacing: .13em; text-align: right; }
+    .hero { position: relative; padding-block: 3rem 2.5rem; border-bottom: 1px solid var(--line); }
+    .eyebrow { color: var(--accent); font-size: .72rem; font-weight: 750; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 1rem; }
+    .hero h1 + p, .hero .summary { font-size: 1.05rem; max-width: 65ch; margin-top: 1.25rem; color: var(--muted); }
+    .hero .as-of, .hero .meta { display: block; font: .75rem/1.6 ui-monospace, monospace; color: var(--muted); margin-top: 1rem; }
+    .overview { display: grid; grid-template-columns: minmax(180px, .8fr) minmax(0, 2fr); gap: 2rem; padding-block: 2rem; border-bottom: 1px solid var(--line); }
+    .completion { border-left: 4px solid var(--accent); padding-left: 1.25rem; }
+    .completion strong { font: 500 2.7rem/1.15 Georgia, serif; display: block; }
+    .completion p { display: flex; align-items: baseline; gap: .4rem; }
+    .completion p, .completion span, .completion small { font-size: .85rem; color: var(--muted); }
+    .status-chart { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .8rem 1.5rem; align-content: center; }
+    .status-row { display: grid; grid-template-columns: 1fr auto; align-items: center; column-gap: .5rem; font-size: .78rem; }
+    .status-row .bar { grid-column: 1 / -1; height: 5px; min-width: 0; border-radius: 1px; margin-top: .35rem; background: var(--line); overflow: hidden; }
+    .bar > span, .bar > i { display: block; height: 100%; background: currentColor; }
+    .columns { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr); gap: 2.5rem; padding-block: 2rem 3rem; }
+    .primary, .secondary { min-width: 0; }
+    .secondary { border-left: 1px solid var(--line); padding-left: 2rem; }
+    .panel { margin-bottom: 2rem; }
+    .panel:last-child { margin-bottom: 0; }
+    .section-heading { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--line); }
+    .section-heading span { font: .7rem/1.4 ui-monospace, monospace; color: var(--muted); }
+    ul, ol { padding-left: 1.25rem; }
+    .goal-list, .evidence-list { list-style: none; padding: 0; margin: 0; }
+    .goal { padding: 1.25rem 0; border-bottom: 1px solid var(--line); }
+    .goal-top { display: flex; align-items: flex-start; gap: .8rem; justify-content: space-between; }
+    .goal h3 { font-weight: 650; }
+    .goal p, .goal .refs { font-size: .8rem; margin-top: .6rem; color: var(--muted); }
+    .badge { display: inline-block; flex: 0 0 auto; border: 1px solid currentColor; border-radius: 3px; font: 700 .65rem/1.3 ui-monospace, monospace; padding: .25rem .45rem; text-transform: uppercase; letter-spacing: .03em; }
+    .s-planned { color: var(--planned); } .s-running { color: var(--running); }
+    .s-passed { color: var(--passed); } .s-failed { color: var(--failed); }
+    .s-skipped { color: var(--skipped); } .s-unknown { color: var(--unknown); }
+    .evidence { padding: 1.1rem 0; border-bottom: 1px solid var(--line); }
+    .evidence .badge { margin-bottom: .4rem; }
+    .evidence p { font-size: .85rem; margin-top: .4rem; color: var(--muted); }
+    .evidence time, .evidence small { display: block; font: .7rem/1.7 ui-monospace, monospace; color: var(--muted); margin-top: .4rem; }
+    .evidence a { font-size: .8rem; }
+    .blocker { margin-top: 1rem; background: #fff7e8; border-left: 3px solid #a6641c; padding: 1rem; }
+    .blocker .badge { margin-bottom: .5rem; }
+    .blocker p { margin-top: .5rem; font-size: .85rem; }
+    .suggestion { margin-top: 1.25rem; }
+    .suggestion .kind { display: block; color: var(--accent); font: 750 .68rem/1.5 ui-monospace, monospace; text-transform: uppercase; letter-spacing: .08em; margin-bottom: .25rem; }
+    .suggestion p { font-size: .85rem; color: var(--muted); margin-top: .4rem; white-space: pre-wrap; }
+    .suggestion h3 { font-size: .95rem; }
+    .suggestion .eyebrow { display: block; font: 750 .68rem/1.5 ui-monospace, monospace; margin-bottom: .35rem; letter-spacing: .08em; }
+    .secondary .meta, .snapshot-footer { color: var(--muted); font-size: .75rem; }
+    .snapshot-footer { padding-block: 1rem 2rem; }
+    .empty { color: var(--muted); font-size: .85rem; padding-block: 1rem; }
+    .notes { font-size: .85rem; color: var(--muted); }
+    .notes li { padding-bottom: .5rem; }
+    .advisory { color: var(--muted); font-size: .75rem; margin-top: .5rem; }
+    .user-notes { padding-block: 1.5rem; border-top: 1px solid var(--line); }
+    .user-notes summary { cursor: pointer; font-size: .85rem; font-weight: 650; }
+    .user-notes p { color: var(--muted); font-size: .8rem; margin-top: .75rem; max-width: 75ch; }
+    .footer { display: flex; justify-content: space-between; gap: 1rem; padding-block: 1.5rem 2rem; color: var(--muted); font: .68rem/1.6 ui-monospace, monospace; }
+    @media (max-width: 760px) {
+      .hero { padding-block: 2rem; }
+      .overview { grid-template-columns: 1fr; gap: 1.5rem; }
+      .completion strong { font-size: 2.25rem; }
+      .columns { grid-template-columns: 1fr; gap: 2rem; }
+      .secondary { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); padding-top: 2rem; }
+    }
+    @media (max-width: 380px) {
+      .status-chart { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .goal-top { flex-direction: column-reverse; gap: .6rem; }
+      .footer { flex-direction: column; gap: .25rem; }
+    }
+    @media print {
+      body { background: white; }
+      .masthead, .dashboard, .user-notes, .footer { padding-inline: 0; }
+      .hero { padding-block: 1.5rem; }
+      .columns { display: block; } .secondary { border: 0; padding: 0; }
+      .goal, .evidence, .blocker, .suggestion { break-inside: avoid; }
+      .user-notes { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="masthead">
+    <div class="brand"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>visual-session</div>
+    <div class="edition">SESSION FIELDNOTES<br>LOCAL · SNAPSHOT · ADVISORY</div>
+  </header>
+  <main id="session" class="dashboard">
+<!-- visual-session:begin revision=1 checksum=34e8204324effda5 -->
+<div class="session-content"><header class="hero"><p class="eyebrow">VISUAL SESSION <span>LOCAL SNAPSHOT · REVISION 1</span></p><h1>The seed library field guide</h1><p class="summary">A fully synthetic session: turn a small collection of planting notes into an accessible, printable guide. The structure is proven; the illustrations and print checks need another pass.</p><p class="as-of">As of <time datetime="2026-01-15T14:30:00Z">2026-01-15T14:30:00Z</time> · seed-guide-demo</p></header><section class="overview" aria-label="Goal status overview"><div class="completion"><span class="eyebrow">GOALS WITH PASSED EVIDENCE</span><p><strong>1</strong><span> / 6</span></p><small>Counts reflect recorded states, not effort or time</small></div><div class="status-chart" role="group" aria-label="Goal counts by status"><div class="status-row"><span>planned</span><strong>1</strong><span class="bar s-planned"><i style="width:16%"></i></span></div><div class="status-row"><span>running</span><strong>1</strong><span class="bar s-running"><i style="width:16%"></i></span></div><div class="status-row"><span>passed</span><strong>1</strong><span class="bar s-passed"><i style="width:16%"></i></span></div><div class="status-row"><span>failed</span><strong>1</strong><span class="bar s-failed"><i style="width:16%"></i></span></div><div class="status-row"><span>skipped</span><strong>1</strong><span class="bar s-skipped"><i style="width:16%"></i></span></div><div class="status-row"><span>unknown</span><strong>1</strong><span class="bar s-unknown"><i style="width:16%"></i></span></div></div></section><div class="columns"><div class="primary"><section class="panel" id="goals"><div class="section-heading"><h2>Goals &amp; progress</h2><span>Evidence before confidence</span></div><ol class="goal-list"><li class="goal" id="goal-structure"><div class="goal-top"><h3>Make the guide easy to navigate</h3><span class="badge s-passed">passed</span></div><p class="evidence-refs"><a href="#evidence-outline-review">Outline has one clear path from seed to harvest</a></p></li><li class="goal" id="goal-illustrations"><div class="goal-top"><h3>Draw three simple planting diagrams</h3><span class="badge s-running">running</span></div><p class="evidence-refs"><a href="#evidence-drawing-check">Two diagrams drafted; the third is still in progress</a></p></li><li class="goal" id="goal-print"><div class="goal-top"><h3>Meet the print contrast target</h3><span class="badge s-failed">failed</span></div><p class="evidence-refs"><a href="#evidence-print-check">Small caption contrast did not meet the chosen target</a></p></li><li class="goal" id="goal-reading"><div class="goal-top"><h3>Check the reading order on a small screen</h3><span class="badge s-planned">planned</span></div><p class="evidence-refs">No evidence linked</p></li><li class="goal" id="goal-translation"><div class="goal-top"><h3>Translate the guide after the first edition</h3><span class="badge s-skipped">skipped</span></div><p class="evidence-refs"><a href="#evidence-scope-decision">Translation intentionally deferred to the next edition</a></p></li><li class="goal" id="goal-paper"><div class="goal-top"><h3>Confirm the recycled-paper print result</h3><span class="badge s-unknown">unknown</span></div><p class="evidence-refs">No evidence linked</p></li></ol></section><section class="panel" id="evidence"><div class="section-heading"><h2>Evidence ledger</h2><span>Source + observation time</span></div><div class="evidence-list"><article class="evidence" id="evidence-outline-review"><div class="goal-top"><h3>Outline has one clear path from seed to harvest</h3><span class="badge s-passed">passed</span></div><p>Synthetic outline walkthrough, fixture A</p><p class="meta"><time datetime="2026-01-15T13:40:00Z">2026-01-15T13:40:00Z</time></p></article><article class="evidence" id="evidence-drawing-check"><div class="goal-top"><h3>Two diagrams drafted; the third is still in progress</h3><span class="badge s-running">running</span></div><p>Synthetic drawing inventory, fixture B</p><p class="meta"><time datetime="2026-01-15T14:20:00Z">2026-01-15T14:20:00Z</time></p></article><article class="evidence" id="evidence-print-check"><div class="goal-top"><h3>Small caption contrast did not meet the chosen target</h3><span class="badge s-failed">failed</span></div><p>Synthetic print check, fixture C; no actual measurement</p><p class="meta"><time datetime="2026-01-15T14:10:00Z">2026-01-15T14:10:00Z</time></p></article><article class="evidence" id="evidence-scope-decision"><div class="goal-top"><h3>Translation intentionally deferred to the next edition</h3><span class="badge s-skipped">skipped</span></div><p>Synthetic scope decision, fixture D</p><p class="meta"><time datetime="2026-01-15T13:00:00Z">2026-01-15T13:00:00Z</time> · <a href="https://example.com/synthetic-scope" rel="noreferrer noopener">Open evidence ↗</a></p></article></div></section></div><aside class="secondary"><section class="panel"><div class="section-heading"><h2>Blockers</h2><span>What needs attention</span></div><article class="blocker"><div class="goal-top"><h3>The smallest captions need a darker ink</h3><span class="badge s-failed">failed</span></div><p>The synthetic print check failed. Adjust the caption treatment, then run the same check again before calling the print goal passed.</p></article><article class="blocker"><div class="goal-top"><h3>No paper sample is available yet</h3><span class="badge s-unknown">unknown</span></div><p>There is no observed result for the paper test. Leave the goal unknown until a sample is checked.</p></article></section><section class="panel"><div class="section-heading"><h2>Suggested next moves</h2></div><p class="meta">Suggestions only. Review against the current goal and authorization.</p><article class="suggestion"><span class="eyebrow">PROMPT SUGGESTION</span><h3>Resolve the smallest unproven step</h3><p>Suggested prompt: Darken the small captions, repeat the print check, and attach the observed result. Keep the other goals unchanged.</p></article><article class="suggestion"><span class="eyebrow">SKILL SUGGESTION</span><h3>Consider an accessibility review</h3><p>If an accessibility skill is available, use it for the reading-order goal after the diagrams settle. This is a suggestion, not an invocation.</p></article><article class="suggestion"><span class="eyebrow">CONTEXT SUGGESTION</span><h3>Carry the decision, not the whole conversation</h3><p>Retain the edition scope, caption requirement, evidence identifiers, and unresolved paper test in the next handoff. Omit draft chatter and unrelated history.</p></article><article class="suggestion"><span class="eyebrow">LOOP SUGGESTION</span><h3>One adjustment → one observed check</h3><p>Suggested loop: change captions → run the print check → record evidence → update this page. Stop after one attempt if the check cannot run; report the blocker instead of inferring success.</p></article></section></aside></div><section class="panel notes"><div class="section-heading"><h2>Session notes</h2></div><ul><li>Every name, event, decision, and result in this demo is synthetic.</li><li>Passed / total counts describe goals with supporting evidence. They are not a prediction of remaining effort.</li><li>This is a snapshot at the displayed time. An earlier result does not prove that later changes pass.</li></ul></section><footer class="snapshot-footer">A local snapshot, not a live monitor. Refresh from verified evidence when the session changes.</footer></div>
+<!-- visual-session:end -->
+  </main>
+  <!-- User-owned region: edits below survive renderer updates. -->
+  <aside class="user-notes" aria-label="User-owned notes">
+    <details>
+      <summary>Your margin notes</summary>
+      <p>This area is yours. Edit this HTML outside the generated session markers to keep notes or presentation changes across updates. Keep session facts in the state file.</p>
+    </details>
+  </aside>
+  <footer class="footer"><span>A field guide to the work in front of you.</span><span>Evidence first. One useful next step.</span></footer>
+</body>
+</html>

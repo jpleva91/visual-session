@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "id": "seed-guide-demo",
+  "revision": 2,
+  "title": "The seed library field guide",
+  "summary": "A fully synthetic update: the caption adjustment passed its repeat check. Illustration work continues, and the paper result remains unknown. The same page now carries the next useful step.",
+  "as_of": "2026-01-15T15:00:00Z",
+  "goals": [
+    {"id": "structure", "title": "Make the guide easy to navigate", "status": "passed", "evidence_ids": ["outline-review"]},
+    {"id": "illustrations", "title": "Draw three simple planting diagrams", "status": "running", "evidence_ids": ["drawing-check"]},
+    {"id": "print", "title": "Meet the print contrast target", "status": "passed", "evidence_ids": ["print-recheck"]},
+    {"id": "reading", "title": "Check the reading order on a small screen", "status": "planned", "evidence_ids": []},
+    {"id": "translation", "title": "Translate the guide after the first edition", "status": "skipped", "evidence_ids": ["scope-decision"]},
+    {"id": "paper", "title": "Confirm the recycled-paper print result", "status": "unknown", "evidence_ids": []}
+  ],
+  "evidence": [
+    {"id": "outline-review", "label": "Outline has one clear path from seed to harvest", "status": "passed", "source": "Synthetic outline walkthrough, fixture A", "as_of": "2026-01-15T13:40:00Z"},
+    {"id": "drawing-check", "label": "Two diagrams drafted; the third is still in progress", "status": "running", "source": "Synthetic drawing inventory, fixture B", "as_of": "2026-01-15T14:20:00Z"},
+    {"id": "print-check", "label": "Earlier small-caption check failed; superseded by print-recheck", "status": "failed", "source": "Synthetic print check, fixture C; no actual measurement", "as_of": "2026-01-15T14:10:00Z"},
+    {"id": "print-recheck", "label": "Darker captions passed the repeat check", "status": "passed", "source": "Synthetic repeat print check, fixture E; no actual measurement", "as_of": "2026-01-15T14:55:00Z"},
+    {"id": "scope-decision", "label": "Translation intentionally deferred to the next edition", "status": "skipped", "source": "Synthetic scope decision, fixture D", "as_of": "2026-01-15T13:00:00Z", "url": "https://example.com/synthetic-scope"}
+  ],
+  "blockers": [
+    {"id": "paper-sample", "title": "No paper sample is available yet", "status": "unknown", "detail": "There is no observed result for the paper test. Leave the goal unknown until a sample is checked."}
+  ],
+  "suggestions": [
+    {"kind": "prompt", "title": "Finish the remaining diagram", "detail": "Suggested prompt: Complete the third planting diagram and report what changed. Then decide whether the guide is ready for the small-screen reading-order check."},
+    {"kind": "skill", "title": "Consider an accessibility review", "detail": "If an accessibility skill is available, use it for the reading-order goal after the diagrams settle. This page does not invoke it."},
+    {"kind": "context", "title": "Keep the repeat-check provenance", "detail": "Carry forward print-recheck and its timestamp alongside the edition scope. Retain the earlier failed result as history; do not treat it as the current check."},
+    {"kind": "loop", "title": "Finish → inspect → record", "detail": "Suggested loop: finish one diagram → inspect the reading flow → record evidence → update this page. Stop if the next check needs unavailable resources."}
+  ],
+  "notes": [
+    "Every name, event, decision, and result in this demo is synthetic.",
+    "The print goal changed only after new evidence was recorded. The earlier failed check is retained for provenance.",
+    "The artifact identity is seed-guide-demo at both revisions. User-owned HTML remains in place across the update."
+  ]
+}

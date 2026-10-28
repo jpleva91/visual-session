@@ -1,0 +1,14 @@
+/target/
+**/target/
+# Real session data and dashboards stay local. Only audited synthetic examples belong in Git.
+.visual-session/
+**/.visual-session/
+*.session.json
+*.dashboard.html
+*.visual-session.lock
+*.visual-session.tmp
+.env
+.env.*
+*.pem
+*.key
+*.log

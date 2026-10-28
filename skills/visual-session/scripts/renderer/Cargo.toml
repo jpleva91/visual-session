@@ -1,0 +1,13 @@
+[package]
+name = "visual-session"
+version = "0.1.0"
+edition = "2021"
+description = "Local, deterministic session dashboard renderer and validator"
+license = "MIT"
+publish = false
+
+[dependencies]
+serde_json = "=1.0.151"
+
+[lints.rust]
+unsafe_code = "forbid"
