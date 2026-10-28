@@ -8,7 +8,11 @@ The skill maintains a structured local state file and updates the same dashboard
 
 Download and open [examples/demo.html](examples/demo.html) in a browser. It is a self-contained snapshot of a fictional seed-guide session. All example results and decisions are synthetic. The [initial state](examples/session.json) and [updated checkpoint](examples/session-updated.json) show how evidence changes a goal from failed to passed.
 
-The page combines a goal-status distribution, linked evidence ledger, blockers, next-prompt and skill suggestions, context guidance, and a bounded suggested loop. Counts describe recorded goal states, not remaining effort or a confidence score.
+The page leads with one useful next prompt. A linked ring gives every goal a place, while a compact work list connects status to evidence. Context and loop guidance sit together, and a newest-first evidence trail keeps the observations visible. Counts describe recorded goal states, not remaining effort or a confidence score.
+
+![Desktop preview of the synthetic session dashboard](examples/desktop.png)
+
+[See the mobile preview](examples/mobile.png). The HTML itself adapts to your screen; these are actual browser captures of the synthetic demo.
 
 ## Install the skill
 
@@ -63,7 +67,7 @@ State schema version 1 requires a stable `id`, increasing `revision`, snapshot `
 ## Safe updates and local privacy
 
 - Rendering to a new path creates a page. Rendering to the same path updates its managed session region. Identity mismatches, stale revisions, arbitrary existing files, edited generated regions, symlink outputs, busy locks, and HTML over 8 MiB are refused.
-- HTML outside the managed region survives byte for byte, including margin notes, styles, and the browser-tab title. The visible session title comes from the current state. Template changes apply to new pages; existing layouts require deliberate reconciliation.
+- HTML outside the managed region survives byte for byte, including margin notes, styles, and the browser-tab title. The visible session title comes from the current state. New pages use layout 2; earlier pages retain their original markup and styles on update. A redesign migration requires deliberate reconciliation.
 - The edit-detection checksum prevents accidental clobbering; it is not an authentication mechanism. Locks coordinate this tool's writers, not arbitrary external editors. Close concurrent editors while rendering.
 - Text is escaped, optional evidence links allow a conservative subset of HTTPS, and the page blocks scripts and network assets with a Content Security Policy. Clicking an evidence link deliberately visits that destination.
 - Unix output files are created with mode `0600`. Secure the state and directory yourself; other systems use their normal file permissions. Exclusion is not encryption or protection against cloud sync.
@@ -83,7 +87,9 @@ CARGO_BUILD_JOBS=1 cargo test --offline --locked \
   --manifest-path skills/visual-session/scripts/renderer/Cargo.toml
 ```
 
-Tests cover deterministic rendering, create/update behavior, preserved user edits, collision and revision refusals, injection attempts, invalid links, status/evidence validation, timestamps, output permissions, and lock behavior. Regenerate `examples/demo.html` from the initial fixture after template changes; never use real state for a committed demo.
+Tests cover deterministic rendering, create/update behavior, preserved user edits, collision and revision refusals, injection attempts, invalid links, status/evidence validation, timestamps, output permissions, lock behavior, prompt priority, chronological evidence, goal-ring semantics, and compatibility with original dashboards. Regenerate `examples/demo.html` from the initial fixture after template changes; never use real state for a committed demo.
+
+The redesigned demo was rendered and visually reviewed in installed Chrome 149 at 320, 390, 768, 1024, and 1440px with the browser sandbox enabled. The review included the updated checkpoint. Contrast tests check known text/background pairs and the dark-panel focus outline; CSS respects reduced-motion preferences. This is not a complete screen-reader or cross-browser accessibility audit.
 
 The MVP has no transcript ingestion, automatic monitoring, browser-side state editing, Markdown/HTML interpolation, arbitrary local evidence links, or agent orchestration. Its output is a snapshot, and evidence can become stale after a relevant change.
 

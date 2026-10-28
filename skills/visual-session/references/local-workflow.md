@@ -25,13 +25,15 @@ The renderer uses an identified managed region with an edit-detection checksum. 
 
 Edits inside the managed region produce a conflict. Preserve the edited page and state, show the conflicting content to the user when needed, and offer to move the edit into state or outside the region. Reconciliation must retain the user's intent; removing the checksum or recreating the dashboard to evade the refusal would lose the protection. Also preserve the existing artifact on identity mismatch, stale revision, invalid input, or a busy lock. Investigate an uncertain prior render before retrying it. Do not guess that a lock is stale.
 
-Changes to the installed template affect newly created pages. Existing pages preserve their surrounding HTML so user customizations survive. Applying a redesigned template to an existing artifact is a separate migration that requires deliberate reconciliation.
+New pages use layout 2: a featured next prompt, a linked goal-state ring, context and loop guidance, and a newest-first evidence trail. Each goal previews its latest linked observation without changing its recorded status; the full observations remain in the ledger. The ring has one equal segment per recorded goal; it does not measure effort, time, or confidence. Select the featured request to copy it manually; the page does not execute or use the clipboard.
+
+Changes to the installed template affect newly created pages. Existing pages preserve their surrounding HTML so user customizations survive. Pages created before layout 2 keep the original markup and styling during normal updates. Applying the redesign to an existing artifact is a separate migration: preserve a private copy, reconcile all user-owned notes and styling into a newly rendered wrapper with the same session identity, and inspect the result before replacing the original. Do not remove the old file or its conflict guards to force an upgrade.
 
 ## Useful recommendations
 
 Prefer a few grounded suggestions over a generic checklist:
 
-- `prompt`: A copyable next request tied to the unresolved task, such as asking to compare a failed check with the expected result.
+- `prompt`: A copyable next request tied to the unresolved task, such as asking to compare a failed check with the expected result. Put the recommended prompt first; avoid vague titles such as “Next step.”
 - `skill`: An available skill that addresses the next step; explain why it fits. Label availability as unverified if it cannot be checked.
 - `context`: The decision, constraint, evidence reference, or unresolved question to carry into the next turn or handoff. Keep it short and exclude hidden instructions.
 - `loop`: One bounded next action, the evidence that determines success, and the stop condition. For example: “Check one example; record its actual output; stop after recording success or a missing prerequisite.”

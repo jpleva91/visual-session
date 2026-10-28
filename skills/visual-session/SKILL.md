@@ -10,7 +10,7 @@ Maintain one readable session dashboard and its structured state. Use this for a
 ## Create
 
 1. Read the current task, its constraints, and only the evidence already provided or obtained within the authorized task. Choose a compact summary of the goal, meaningful milestones, unresolved blockers, and useful next steps. Do not collect transcripts, environment variables, credentials, or unrelated files to populate the page.
-2. Read [the state contract](references/state-contract.md). Create a unique, stable session `id` and revision `1`. Record evidence sources and UTC observation times. Use `unknown` where a claim has not been verified; never label proposed work `passed`.
+2. Read [the state contract](references/state-contract.md). Create a unique, stable session `id` and revision `1`. Record evidence sources and UTC observation times. Use `unknown` where a claim has not been verified; never label proposed work `passed`. Put the most useful `prompt` suggestion first: it becomes the featured next move. Write its detail as a copyable request and keep its title concrete.
 3. Default to `.visual-session/state.json` and `.visual-session/dashboard.html` in the working project. Before saving real data, ensure these paths are untracked and locally ignored. Use a private directory outside the checkout if local exclusion is unavailable. Create state with restrictive permissions; see [local files and updates](references/local-workflow.md).
 4. With the existing Rust toolchain, validate and render, substituting the installed skill directory:
 
@@ -20,7 +20,7 @@ Maintain one readable session dashboard and its structured state. Use this for a
    ```
 
    If dependencies are not cached, report the missing build prerequisite. Do not install software or enable network access implicitly.
-5. Open the local HTML when a file viewer is available. Check that status, evidence dates, and next steps make sense at desktop and narrow widths. Return the same dashboard path and a short factual update.
+5. Open the local HTML when a file viewer is available. Check that the featured next move, status, evidence dates, and context make sense at desktop and narrow widths. The ring links to individual goals; evidence is shown newest first. Report visual verification only when the page was actually rendered. Return the same dashboard path and a short factual update.
 
 ## Update
 

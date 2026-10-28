@@ -3,7 +3,7 @@
   "id": "seed-guide-demo",
   "revision": 1,
   "title": "The seed library field guide",
-  "summary": "A fully synthetic session: turn a small collection of planting notes into an accessible, printable guide. The structure is proven; the illustrations and print checks need another pass.",
+  "summary": "The outline is settled. Two diagrams are drafted. Fix caption contrast before the print check can pass.",
   "as_of": "2026-01-15T14:30:00Z",
   "goals": [
     {"id": "structure", "title": "Make the guide easy to navigate", "status": "passed", "evidence_ids": ["outline-review"]},
@@ -24,10 +24,10 @@
     {"id": "paper-sample", "title": "No paper sample is available yet", "status": "unknown", "detail": "There is no observed result for the paper test. Leave the goal unknown until a sample is checked."}
   ],
   "suggestions": [
-    {"kind": "prompt", "title": "Resolve the smallest unproven step", "detail": "Suggested prompt: Darken the small captions, repeat the print check, and attach the observed result. Keep the other goals unchanged."},
-    {"kind": "skill", "title": "Consider an accessibility review", "detail": "If an accessibility skill is available, use it for the reading-order goal after the diagrams settle. This is a suggestion, not an invocation."},
-    {"kind": "context", "title": "Carry the decision, not the whole conversation", "detail": "Retain the edition scope, caption requirement, evidence identifiers, and unresolved paper test in the next handoff. Omit draft chatter and unrelated history."},
-    {"kind": "loop", "title": "One adjustment → one observed check", "detail": "Suggested loop: change captions → run the print check → record evidence → update this page. Stop after one attempt if the check cannot run; report the blocker instead of inferring success."}
+    {"kind": "prompt", "title": "Bring the captions into focus.", "detail": "Darken the small captions, repeat the print check, and attach the observed result. Keep the remaining goals unchanged."},
+    {"kind": "skill", "title": "A useful lens: accessibility", "detail": "Consider an accessibility review for the small-screen reading order once the diagrams settle. Skill availability is unverified."},
+    {"kind": "context", "title": "Keep the decisions. Leave the draft chatter.", "detail": "First edition: one clear path from seed to harvest. Carry the caption requirement, evidence IDs, and unresolved paper test into the next handoff."},
+    {"kind": "loop", "title": "One adjustment. One observed result.", "detail": "Change captions → repeat the print check → record evidence. Stop after one attempt if the check cannot run; keep its outcome unknown and report the blocker."}
   ],
   "notes": [
     "Every name, event, decision, and result in this demo is synthetic.",

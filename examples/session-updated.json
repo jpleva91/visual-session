@@ -3,7 +3,7 @@
   "id": "seed-guide-demo",
   "revision": 2,
   "title": "The seed library field guide",
-  "summary": "A fully synthetic update: the caption adjustment passed its repeat check. Illustration work continues, and the paper result remains unknown. The same page now carries the next useful step.",
+  "summary": "The darker captions passed their repeat check. Finish the final diagram, then inspect the reading flow. The paper result remains unknown.",
   "as_of": "2026-01-15T15:00:00Z",
   "goals": [
     {"id": "structure", "title": "Make the guide easy to navigate", "status": "passed", "evidence_ids": ["outline-review"]},
@@ -24,10 +24,10 @@
     {"id": "paper-sample", "title": "No paper sample is available yet", "status": "unknown", "detail": "There is no observed result for the paper test. Leave the goal unknown until a sample is checked."}
   ],
   "suggestions": [
-    {"kind": "prompt", "title": "Finish the remaining diagram", "detail": "Suggested prompt: Complete the third planting diagram and report what changed. Then decide whether the guide is ready for the small-screen reading-order check."},
-    {"kind": "skill", "title": "Consider an accessibility review", "detail": "If an accessibility skill is available, use it for the reading-order goal after the diagrams settle. This page does not invoke it."},
-    {"kind": "context", "title": "Keep the repeat-check provenance", "detail": "Carry forward print-recheck and its timestamp alongside the edition scope. Retain the earlier failed result as history; do not treat it as the current check."},
-    {"kind": "loop", "title": "Finish → inspect → record", "detail": "Suggested loop: finish one diagram → inspect the reading flow → record evidence → update this page. Stop if the next check needs unavailable resources."}
+    {"kind": "prompt", "title": "Complete the picture.", "detail": "Finish the third planting diagram and report what changed. Then decide whether the guide is ready for its small-screen reading-order check."},
+    {"kind": "skill", "title": "A useful lens: accessibility", "detail": "Consider an accessibility review for the small-screen reading order once the diagrams settle. Skill availability is unverified."},
+    {"kind": "context", "title": "The repeat check is the current evidence.", "detail": "Carry print-recheck and its observation time alongside the edition scope. Keep the earlier failed result as history; do not present it as the current check."},
+    {"kind": "loop", "title": "Finish → inspect → record", "detail": "Finish one diagram → inspect the reading flow → record evidence. Stop if the next check needs unavailable resources."}
   ],
   "notes": [
     "Every name, event, decision, and result in this demo is synthetic.",

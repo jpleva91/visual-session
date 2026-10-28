@@ -5,6 +5,8 @@ use std::fs::{self, OpenOptions};
 use std::io::{Read, Write};
 use std::path::{Path, PathBuf};
 
+mod layout;
+
 const TEMPLATE: &str = include_str!("../../../assets/dashboard.html");
 const LIMIT: u64 = 1024 * 1024;
 const HTML_LIMIT: u64 = 8 * LIMIT;
@@ -357,7 +359,7 @@ fn badge(status: &str) -> String {
     format!("<span class=\"badge s-{status}\">{status}</span>")
 }
 
-fn content(s: &Session) -> String {
+fn legacy_content(s: &Session) -> String {
     let mut html = String::new();
     let passed = s.goals.iter().filter(|g| g.status == "passed").count();
     let _ = write!(html, "<div class=\"session-content\"><header class=\"hero\"><p class=\"eyebrow\">VISUAL SESSION <span>LOCAL SNAPSHOT · REVISION {}</span></p><h1>{}</h1><p class=\"summary\">{}</p><p class=\"as-of\">As of <time datetime=\"{}\">{}</time> · {}</p></header><section class=\"overview\" aria-label=\"Goal status overview\"><div class=\"completion\"><span class=\"eyebrow\">GOALS WITH PASSED EVIDENCE</span><p><strong>{}</strong><span> / {}</span></p><small>{}</small></div><div class=\"status-chart\" role=\"group\" aria-label=\"Goal counts by status\">", s.revision, escape(&s.title), escape(&s.summary), s.as_of, s.as_of, escape(&s.id), passed, s.goals.len(), if s.goals.is_empty() { "No goals recorded yet" } else { "Counts reflect recorded states, not effort or time" });
@@ -445,8 +447,15 @@ fn checksum(s: &str) -> String {
     format!("{hash:016x}")
 }
 
-fn managed(s: &Session) -> String {
-    let body = format!("\n{}", content(s));
+fn managed(s: &Session, layout2: bool) -> String {
+    let body = format!(
+        "\n{}",
+        if layout2 {
+            layout::content(s)
+        } else {
+            legacy_content(s)
+        }
+    );
     format!(
         "{BEGIN}revision={} checksum={} -->{body}{END}",
         s.revision,
@@ -455,7 +464,9 @@ fn managed(s: &Session) -> String {
 }
 
 pub fn render(s: &Session, previous: Option<&str>) -> Result<String> {
-    let replacement = managed(s);
+    let layout2 = previous
+        .is_none_or(|html| html.contains("<meta name=\"visual-session-layout\" content=\"2\">"));
+    let replacement = managed(s, layout2);
     let Some(previous) = previous else {
         // Expand only tokens from the trusted template, never tokens introduced by data.
         let mut parts = TEMPLATE.split("{{");

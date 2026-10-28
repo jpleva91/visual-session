@@ -321,7 +321,7 @@ fn allows_explicit_empty_sections_without_implying_success() {
     assert_ok(sandbox.render(&state));
     let html = sandbox.html();
     assert!(html.contains("No goals recorded yet"));
-    assert!(!html.contains("width:100%"));
+    assert!(!html.contains("class=\"ring-segment "));
 }
 
 #[test]
@@ -393,31 +393,18 @@ fn rejects_oversized_input_before_rendering() {
 fn rejects_amplified_output_without_creating_or_overwriting_dashboard() {
     let sandbox = Sandbox::new();
     let mut amplified = fixture();
-    let evidence_ids: Vec<String> = (0..100)
-        .map(|index| format!("observation-{index}"))
-        .collect();
-    amplified["evidence"] = Value::Array(
-        evidence_ids
-            .iter()
-            .map(|id| {
-                json!({
-                    "id": id,
-                    "label": "x".repeat(1000),
-                    "status": "passed",
-                    "source": "Synthetic amplification fixture",
-                    "as_of": "2026-10-28T00:59:00Z"
-                })
-            })
-            .collect(),
-    );
+    // Layout 2 uses compact evidence IDs, avoiding the earlier label amplification.
+    // Escaping a valid large goal title in its visible text and SVG descriptions
+    // still exercises the final HTML limit without exceeding the input limit.
+    amplified["evidence"] = json!([]);
     amplified["goals"] = Value::Array(
         (0..100)
             .map(|index| {
                 json!({
                     "id": format!("goal-{index}"),
-                    "title": "A synthetic goal with many shared observations",
-                    "status": "passed",
-                    "evidence_ids": evidence_ids
+                    "title": "&".repeat(7000),
+                    "status": "planned",
+                    "evidence_ids": []
                 })
             })
             .collect(),

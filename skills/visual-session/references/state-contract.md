@@ -35,7 +35,7 @@ The state is one UTF-8 JSON object. All fields shown below are required except e
 | `goals` | `{id, title, status, evidence_ids}` records. IDs are unique within goals. References must resolve to evidence IDs. A `passed` goal needs at least one `passed` evidence record. |
 | `evidence` | `{id, label, status, source, as_of, url?}` records. IDs are unique within evidence. `source` identifies the observation or check without leaking private details. `as_of` cannot be later than the snapshot. |
 | `blockers` | `{id, title, status, detail}` records with unique IDs. Describe the missing information, failed check, or dependency and what would resolve it. |
-| `suggestions` | `{kind, title, detail}` records. `kind` is `prompt`, `skill`, `context`, or `loop`. They are proposals for the reader. |
+| `suggestions` | `{kind, title, detail}` records. `kind` is `prompt`, `skill`, `context`, or `loop`. They are proposals for the reader. The first `prompt` is featured; further prompts remain available as alternatives. Context, skill, and loop suggestions appear in their respective sections, preserving order within each kind. |
 | `notes` | Plain-text user/context notes. Preserve existing notes when updating. |
 
 Every status is exactly one of:
